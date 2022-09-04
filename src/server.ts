@@ -14,7 +14,7 @@ const isImageURL = require('image-url-validator').default;
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
 
-  app.get("/filteredimage", async (req, res) => {
+  app.get("/filteredimage", async (req: express.Request, res: express.Response) => {
     try {
       if (req.query.image_url == undefined) {
         res.status(400).send({ 'message': 'Missing query param [image_url]' });
@@ -25,7 +25,7 @@ const isImageURL = require('image-url-validator').default;
           res.status(400).send({ 'message': 'Invalid Image, please provide a valid image url' });
         }
         else {
-          let filteredImage : string = await filterImageFromURL(req.query.image_url) as string;
+          let filteredImage: string = await filterImageFromURL(req.query.image_url) as string;
           res.sendFile(filteredImage, async (err) => {
             if (err) {
               console.log(err);
